@@ -38,21 +38,7 @@ class CreateUsersTable extends Migration
             $table->string('sabbathDay')->nullable();
             $table->string('contactNumber')->nullable();
             $table->binary('fingerPrint')->nullable();
-            $table->timestamps();
-        });
-
-        Schema::create('workers_masterlist', function (Blueprint $table) {
-            $table->increments('id');
-            $table->string('churchId')->unique();
-            $table->string('firstname')->nullable();
-            $table->string('middlename')->nullable();
-            $table->string('lastname')->nullable();
-            $table->string('email')->nullable();
-            $table->string('lokalOrigin')->nullable();
-            $table->string('birthday')->nullable();
-            $table->string('sabbathDay')->nullable();
-            $table->string('contactNumber')->nullable();
-            $table->binary('fingerPrint')->nullable();
+            $table->string('memberType')->comments('WORKER / MEMBER')->nullable();
             $table->timestamps();
         });
 
