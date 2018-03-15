@@ -16,8 +16,13 @@ class UserImage extends Model
     protected $hidden = [
         'created_at', 'updated_at',
     ];
-    
+
     public function user () {
       return $this->belongsTo('App\User');
     }
+
+    public function member () {
+      return $this->belongsTo('App\Masterlist');
+    }
+
 }

@@ -21,7 +21,7 @@ class CreateUsersTable extends Migration
             $table->string('firstname')->nullable();
             $table->string('middlename')->nullable();
             $table->string('lastname')->nullable();
-            $table->string('userType'); // ADMIN / CLIENT / SALES_AGENT
+            $table->string('userType'); // ADMIN / SECRETARY
             $table->rememberToken();
             $table->timestamps();
         });
