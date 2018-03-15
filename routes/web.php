@@ -11,6 +11,12 @@
 |
 */
 
+use App\User;
+
 Route::get('/', function () {
     return view('welcome');
+});
+
+Route::get('test', function () {
+  return User::find(1);
 });
