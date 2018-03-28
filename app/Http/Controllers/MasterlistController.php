@@ -33,7 +33,6 @@ class MasterlistController extends Controller
         return response()->json($json, 400);
     }
 
-
     $member = new Masterlist;
     $member->churchId      = $request->input('churchId');
     $member->firstname     = $request->input('firstname');

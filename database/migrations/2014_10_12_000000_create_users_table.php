@@ -32,6 +32,7 @@ class CreateUsersTable extends Migration
             $table->string('firstname')->nullable();
             $table->string('middlename')->nullable();
             $table->string('lastname')->nullable();
+            $table->text('address')->nullable();
             $table->string('email')->nullable();
             $table->string('lokalOrigin')->nullable();
             $table->string('birthday')->nullable();
@@ -39,6 +40,8 @@ class CreateUsersTable extends Migration
             $table->string('contactNumber')->nullable();
             $table->binary('fingerPrint')->nullable();
             $table->string('memberType')->comments('WORKER / MEMBER')->nullable();
+            $table->string('status')->nullable();
+            $table->integer('isOfficer')->unsigned();
             $table->timestamps();
         });
 
