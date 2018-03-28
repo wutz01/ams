@@ -10,10 +10,21 @@
 |
 */
 
+
+Route::post('user/login', 'UserController@authenticate');
+Route::post('user/register', 'UserController@register');
+
+// Generate UUID
+Route::get('generate/guestID', 'ToolsController@generateUUID');
+
 Route::group(['middleware' => 'auth:api'], function () {
   // USER LOGOUT
   Route::post('user/logout', 'UserController@userLogout');
 
+
+  Route::get('test',function(){
+      return response()->json([1,2,3,4],200);
+  });
   /*
    * USERS
    */
@@ -37,9 +48,3 @@ Route::group(['middleware' => 'auth:api'], function () {
   Route::post('member/add', 'MasterlistController@addMember');
   Route::post('member/update', 'MasterlistController@updateMember');
 });
-
-Route::post('user/login', 'UserController@authenticate');
-Route::post('user/register', 'UserController@register');
-
-// Generate UUID
-Route::get('generate/guestID', 'ToolsController@generateUUID');
