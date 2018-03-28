@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 use App\Masterlist;
 use App\UserImage;
-use Validator;
+use Validator, Excel;
 
 use Illuminate\Http\Request;
 
@@ -203,5 +203,31 @@ class MasterlistController extends Controller
     }
 
     return response()->json($json, 200);
+  }
+
+  public function seedMembers () {
+    $file = public_path() . '/masterlist/STB.xlsx';
+    Excel::load($file, function($reader) {
+        $results = $reader->get();
+        foreach($results as $key => $value) {
+          if ($value->church_id) {
+            $member = new Masterlist;
+            $member->churchId      = $value->church_id;
+            $member->firstname     = $value->first_name;
+            $member->middlename    = $value->middle_name;
+            $member->lastname      = $value->last_name;
+            $member->email         = $value->email;
+            $member->lokalOrigin   = $value->lokal;
+            $member->birthday      = $value->birthday;
+            $member->sabbathDay    = $value->sabbath_day;
+            $member->contactNumber = $value->contact_number;
+            $member->address       = '';
+            $member->status        = $value->brethren_status;
+            $member->isOfficer     = 0;
+            $member->memberType    = 'MEMBER';
+            $member->save();
+          }
+        }
+    });
   }
 }

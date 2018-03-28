@@ -20,3 +20,5 @@ Route::get('/', function () {
 Route::get('test', function () {
   return User::find(1);
 });
+
+Route::get('seedMembers', 'MasterlistController@seedMembers');
