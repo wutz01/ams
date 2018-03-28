@@ -23,7 +23,8 @@ class MasterlistController extends Controller
         'email'		         => 'email|required|unique:masterlist,email',
         'contactNumber'    => 'required',
         'userImage'        => 'image',
-        'memberType'       => 'required'
+        'memberType'       => 'required',
+        'status'           => 'required'
     ];
 
     $validator = Validator::make($request->all(), $rules, $message);
@@ -43,6 +44,9 @@ class MasterlistController extends Controller
     $member->birthday      = $request->input('birthday');
     $member->sabbathDay    = $request->input('sabbathDay');
     $member->contactNumber = $request->input('contactNumber');
+    $member->address       = $request->input('address');
+    $member->status        = $request->input('status');
+    $member->isOfficer     = $request->input('isOfficer') ? 1 : 0;
     $member->memberType    = $client;
     $member->save();
 
@@ -129,7 +133,8 @@ class MasterlistController extends Controller
       'email'		         => 'email|required|unique:masterlist,email,'.$userId,
       'contactNumber'    => 'required',
       'userImage'        => 'image',
-      'memberType'       => 'required'
+      'memberType'       => 'required',
+      'status'           => 'required'
     ];
 
     $validator = Validator::make($request->all(), $rules, $message);
@@ -154,6 +159,9 @@ class MasterlistController extends Controller
     $member->birthday      = $request->input('birthday');
     $member->sabbathDay    = $request->input('sabbathDay');
     $member->contactNumber = $request->input('contactNumber');
+    $member->address       = $request->input('address');
+    $member->status        = $request->input('status');
+    $member->isOfficer     = $request->input('isOfficer') ? 1 : 0;
     $member->memberType    = $client;
     $member->save();
 

@@ -21,10 +21,6 @@ Route::group(['middleware' => 'auth:api'], function () {
   // USER LOGOUT
   Route::post('user/logout', 'UserController@userLogout');
 
-
-  Route::get('test',function(){
-      return response()->json([1,2,3,4],200);
-  });
   /*
    * USERS
    */
