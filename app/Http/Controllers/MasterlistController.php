@@ -95,8 +95,8 @@ class MasterlistController extends Controller
   }
 
   public function getAllMembers (Request $request) {
-    if ($request->has('status')) {
-      $json['members'] = Masterlist::where('status', strtoupper($request->input('status')))->get();
+    if ($request->has('memberType')) {
+      $json['members'] = Masterlist::where('memberType', strtoupper($request->input('memberType')))->get();
       return response()->json($json, 200);
     }
     $json['members'] = Masterlist::all();
