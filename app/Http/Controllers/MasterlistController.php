@@ -99,11 +99,12 @@ class MasterlistController extends Controller
   }
 
   public function membersDataFormat ($members) {
+    $member = [];
     foreach ($members as $key => $value) {
       $member[] = [
         'id'          => $value->id,
         'chuchId'     => $value->churchId,
-        'name'        => $value->lastname . ", " . $value->firstname . " " . $value->middlename,
+        'name'        => rtrim($value->lastname . ", " . $value->firstname . " " . $value->middlename, ' '),
         'firstname'   => $value->firstname,
         'lastname'    => $value->lastname,
         'middlename'  => $value->middlename,
