@@ -98,12 +98,38 @@ class MasterlistController extends Controller
     return $client;
   }
 
+  public function membersDataFormat ($members) {
+    foreach ($members as $key => $value) {
+      $member[] = [
+        'id'          => $value->id,
+        'chuchId'     => $value->churchId,
+        'name'        => $value->lastname . ", " . $value->firstname . " " . $value->middlename,
+        'firstname'   => $value->firstname,
+        'lastname'    => $value->lastname,
+        'middlename'  => $value->middlename,
+        'email'       => $value->email,
+        'lokalOrigin' => $value->lokalOrigin,
+        'birthday'    => $value->birthday,
+        'sabbathDay'  => $value->sabbathDay,
+        'contactNumber' => $value->contactNumber,
+        'address'     => $value->address,
+        'status'      => $value->status,
+        'isOfficer'   => $value->isOfficer,
+        'memberType'  => $value->memberType
+      ];
+    }
+
+    return $member;
+  }
+
   public function getAllMembers (Request $request) {
     if ($request->has('memberType')) {
-      $json['members'] = Masterlist::where('memberType', strtoupper($request->input('memberType')))->get();
+      $members = Masterlist::where('memberType', strtoupper($request->input('memberType')))->get();
+      $json['members'] = $this->membersDataFormat($members);
       return response()->json($json, 200);
     }
-    $json['members'] = Masterlist::all();
+    $members = Masterlist::all();
+    $json['members'] = $this->membersDataFormat($members);
     return response()->json($json, 200);
   }
 
