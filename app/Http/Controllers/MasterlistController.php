@@ -103,7 +103,7 @@ class MasterlistController extends Controller
     foreach ($members as $key => $value) {
       $member[] = [
         'id'          => $value->id,
-        'chuchId'     => $value->churchId,
+        'churchId'     => $value->churchId,
         'name'        => rtrim($value->lastname . ", " . $value->firstname . " " . $value->middlename, ' '),
         'firstname'   => $value->firstname,
         'lastname'    => $value->lastname,
