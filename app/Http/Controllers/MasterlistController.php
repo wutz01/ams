@@ -257,4 +257,33 @@ class MasterlistController extends Controller
         }
     });
   }
+
+  public function seedMembers2 () {
+    $file = public_path() . '/masterlist/STB2.xlsx';
+    Excel::load($file, function($reader) {
+        $results = $reader->get();
+        foreach($results as $key => $value) {
+          if ($value->church_id) {
+            $check = Masterlist::where('churchId', '=', strval($value->church_id))->first();
+            if (!$check) {
+              $member = new Masterlist;
+              $member->churchId      = strval($value->church_id);
+              $member->firstname     = $value->first_name;
+              $member->middlename    = $value->middle_name;
+              $member->lastname      = $value->last_name;
+              $member->email         = '';
+              $member->lokalOrigin   = $value->lokal;
+              $member->birthday      = '';
+              $member->sabbathDay    = $value->sabbath_day;
+              $member->contactNumber = $value->contact_number;
+              $member->address       = '';
+              $member->status        = 'ACTIVE';
+              $member->isOfficer     = 0;
+              $member->memberType    = 'MEMBER';
+              $member->save();
+            }
+          }
+        }
+    });
+  }
 }
