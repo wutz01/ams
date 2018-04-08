@@ -71,7 +71,7 @@ class AttendanceController extends Controller
       $data = Attendance::find($attendanceId);
       if ($data) {
         $filename = $data->batch.'-'.$data->date.$data->time;
-        $destinationPath = storage_path('excel/exports');
+        $destinationPath = public_path('excel/exports');
         if (!file_exists($destinationPath)) {
             mkdir($destinationPath, 0777, true);
         }
@@ -80,7 +80,7 @@ class AttendanceController extends Controller
               $sheet->fromModel($data->attendees()->select(['churchId', 'lastname', 'firstname', 'middlename'])->get());
           });
         })->store('xls', $destinationPath);
-        return response()->download($destinationPath, $filename);
+        return response()->json(['url' => $destinationPath.'/'.$filename.'.xls'], 200);
       }
       return response()->json(['error' => 'Failed to generate excel'], 400);
     }
