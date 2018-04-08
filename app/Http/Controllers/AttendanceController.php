@@ -85,7 +85,7 @@ class AttendanceController extends Controller
                   // manipulate the cell
                   $cell->setValue('TOTAL COUNT OF ATTENDEES: ');
               });
-              $sheet->cell('B'.$spacer, function($cell) {
+              $sheet->cell('B'.$spacer, function($cell) use ($counter) {
                   // manipulate the cell
                   $cell->setValue($counter);
               });
