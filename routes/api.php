@@ -51,6 +51,7 @@ Route::group(['middleware' => 'auth:api'], function () {
   Route::get('attendance/all', 'AttendanceController@getAttendanceList');
   // VIEW ATTEDANCE
   Route::get('attendance/{id}', 'AttendanceController@getAttendeesList');
+  Route::get('attendance/{id}/download-excel', 'AttendanceController@downloadAttendance');
 
   Route::post('attendance/add', 'AttendanceController@createAttendance');
   Route::post('attendance/update', 'AttendanceController@updateMember');

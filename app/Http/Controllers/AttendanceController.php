@@ -66,4 +66,17 @@ class AttendanceController extends Controller
         }
       }
     }
+
+    public function downloadAttendance ($attendanceId) {
+      $data = Attendance::find($attendanceId);
+      if ($data) {
+        $filename = $data->batch.'-'.$data->date.$data->time;
+        Excel::create($filename, function($excel) use($data) {
+          $excel->sheet('Attendees', function($sheet) use($data) {
+              $sheet->fromModel($data->attendees()->select(['churchId', 'lastname', 'firstname', 'middlename'])->get());
+          });
+        })->download('xls');
+      }
+      return response()->json(['error' => 'Failed to generate excel'], 400);
+    }
 }
