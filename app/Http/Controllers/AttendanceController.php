@@ -80,7 +80,7 @@ class AttendanceController extends Controller
               $sheet->fromModel($data->attendees()->select(['churchId', 'lastname', 'firstname', 'middlename'])->get());
           });
         })->store('xls', $destinationPath);
-        return response()->json(['url' => $destinationPath.'/'.$filename.'.xls'], 200);
+        return response()->json(['url' => '167.99.79.83/excel/exports/'.$filename.'.xls'], 200);
       }
       return response()->json(['error' => 'Failed to generate excel'], 400);
     }
