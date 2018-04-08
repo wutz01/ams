@@ -43,4 +43,15 @@ Route::group(['middleware' => 'auth:api'], function () {
   // UPDATE MEMBER
   Route::post('member/add', 'MasterlistController@addMember');
   Route::post('member/update', 'MasterlistController@updateMember');
+
+  /*
+   * ATTENDANCE
+   */
+  // GET ALL ATTENDANCE
+  Route::get('attendance/all', 'AttendanceController@getAttendanceList');
+  // VIEW ATTEDANCE
+  Route::get('attendance/{id}', 'AttendanceController@getAttendeesList');
+
+  Route::post('attendance/add', 'AttendanceController@createAttendance');
+  Route::post('attendance/update', 'AttendanceController@updateMember');
 });

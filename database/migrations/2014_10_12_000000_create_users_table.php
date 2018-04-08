@@ -75,7 +75,7 @@ class CreateUsersTable extends Migration
 
         Schema::create('attendance_list', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('attendance_id')->unsigned(); // from workers_masterlist
+            $table->integer('attendance_id')->unsigned(); // from attendance
             $table->integer('brethren_id')->unsigned(); // from masterlist
             $table->timestamps();
         });

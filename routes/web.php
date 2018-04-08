@@ -23,3 +23,4 @@ Route::get('test', function () {
 
 Route::get('seedMembers', 'MasterlistController@seedMembers');
 Route::get('seedMembers2', 'MasterlistController@seedMembers2');
+Route::get('migrate', 'AttendanceController@migrateOldData');
