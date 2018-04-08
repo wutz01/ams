@@ -78,6 +78,17 @@ class AttendanceController extends Controller
         Excel::create($filename, function($excel) use($data) {
           $excel->sheet('Attendees', function($sheet) use($data) {
               $sheet->fromModel($data->attendees()->select(['churchId', 'lastname', 'firstname', 'middlename'])->get());
+
+              $counter = $data->attendees->count();
+              $spacer = $counter+5;
+              $sheet->cell('A'.$spacer, function($cell) {
+                  // manipulate the cell
+                  $cell->setValue('TOTAL COUNT OF ATTENDEES: ');
+              });
+              $sheet->cell('B'.$spacer, function($cell) {
+                  // manipulate the cell
+                  $cell->setValue($counter);
+              });
           });
         })->store('xls', $destinationPath);
         return response()->json(['url' => '167.99.79.83/excel/exports/'.$filename.'.xls'], 200);
