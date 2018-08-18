@@ -30,6 +30,6 @@ class AttendanceMasterlist extends Migration
      */
     public function down()
     {
-        //
+      Schema::dropIfExists('attendance_masterlist');
     }
 }
