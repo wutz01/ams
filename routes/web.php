@@ -21,6 +21,7 @@ Route::get('test', function () {
   return User::find(1);
 });
 
-Route::get('seedMembers', 'MasterlistController@seedMembers');
-Route::get('seedMembers2', 'MasterlistController@seedMembers2');
-Route::get('migrate', 'AttendanceController@migrateOldData');
+Route::get('seed-members', 'MasterlistController@seedMembers');
+Route::get('seed-attendance', 'MasterlistController@seedAttendance');
+Route::get('seed-attendance-list', 'MasterlistController@seedAttendanceList');
+// Route::get('migrate', 'AttendanceController@migrateOldData');

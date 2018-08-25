@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 use App\Masterlist;
+use App\Attendance;
+use App\AttendanceList;
 use App\UserImage;
 use Validator, Excel;
 
@@ -233,57 +235,111 @@ class MasterlistController extends Controller
   }
 
   public function seedMembers () {
-    $file = public_path() . '/masterlist/STB.xlsx';
+    $file = public_path() . '/masterlist/ams.csv/ams_table_masterlist.csv';
     Excel::load($file, function($reader) {
         $results = $reader->get();
-        foreach($results as $key => $value) {
-          if ($value->church_id) {
-            $member = new Masterlist;
-            $member->churchId      = $value->church_id;
-            $member->firstname     = $value->first_name;
-            $member->middlename    = $value->middle_name;
-            $member->lastname      = $value->last_name;
-            $member->email         = $value->email;
-            $member->lokalOrigin   = $value->lokal;
-            $member->birthday      = $value->birthday;
-            $member->sabbathDay    = $value->sabbath_day;
-            $member->contactNumber = $value->contact_number;
-            $member->address       = '';
-            $member->status        = $value->brethren_status;
-            $member->isOfficer     = 0;
-            $member->memberType    = 'MEMBER';
-            $member->save();
-          }
-        }
-    });
-  }
-
-  public function seedMembers2 () {
-    $file = public_path() . '/masterlist/STB2.xlsx';
-    Excel::load($file, function($reader) {
-        $results = $reader->get();
-        foreach($results as $key => $value) {
-          if ($value->church_id) {
-            $check = Masterlist::where('churchId', '=', strval($value->church_id))->first();
-            if (!$check) {
+        try {
+          foreach($results as $key => $value) {
+            if ($value->id && $value->churchid != "MEMBER") {
               $member = new Masterlist;
-              $member->churchId      = strval($value->church_id);
-              $member->firstname     = $value->first_name;
-              $member->middlename    = $value->middle_name;
-              $member->lastname      = $value->last_name;
-              $member->email         = '';
-              $member->lokalOrigin   = $value->lokal;
-              $member->birthday      = '';
-              $member->sabbathDay    = $value->sabbath_day;
-              $member->contactNumber = $value->contact_number;
-              $member->address       = '';
-              $member->status        = 'ACTIVE';
-              $member->isOfficer     = 0;
-              $member->memberType    = 'MEMBER';
+              $member->churchId      = $value->churchid;
+              $member->firstname     = $value->firstname;
+              $member->middlename    = $value->middlename;
+              $member->lastname      = $value->lastname;
+              $member->email         = $value->email;
+              $member->lokalOrigin   = $value->lokalorigin;
+              $member->birthday      = $value->birthday;
+              $member->sabbathDay    = $value->sabbathday;
+              $member->contactNumber = $value->contactnumber;
+              $member->fingerPrint   = $value->fingerprint;
+              $member->address       = $value->address;
+              $member->status        = $value->status;
+              $member->isOfficer     = ($value->isofficer ? 1 : 0);
+              $member->memberType    = $value->membertype;
               $member->save();
             }
           }
+        } catch (\Exception $e) {
+          dd($e);
         }
+
+        echo 'Done';
     });
   }
+
+  public function seedAttendance () {
+    $file = public_path() . '/masterlist/ams.csv/ams_table_attendance.csv';
+    Excel::load($file, function($reader) {
+        $results = $reader->get();
+        try {
+          foreach($results as $key => $value) {
+            if ($value->id) {
+              $att = new Attendance;
+              $att->id = $value->id;
+              $att->batch = $value->batch;
+              $att->time = $value->time;
+              $att->date = $value->date;
+              $att->worker_assign = $value->worker_assign;
+              $att->officer_assign = $value->officer_assign;
+              $att->save();
+            }
+          }
+        } catch (\Exception $e) {
+          dd($e);
+        }
+
+        echo 'Done' . count($results);
+    });
+  }
+
+  public function seedAttendanceList () {
+    $file = public_path() . '/masterlist/ams.csv/attendance_list.csv';
+    Excel::load($file, function($reader) {
+        $results = $reader->get();
+        try {
+          foreach($results as $key => $value) {
+            if ($value->id) {
+              $att = new AttendanceList;
+              $att->id = $value->id;
+              $att->brethren_id = $value->brethren_id;
+              $att->attendance_id = $value->attendance_id;
+              $att->save();
+            }
+          }
+        } catch (\Exception $e) {
+          dd($e);
+        }
+
+        echo 'Done' . count($results);
+    });
+  }
+
+  // public function seedMembers2 () {
+  //   $file = public_path() . '/masterlist/STB2.xlsx';
+  //   Excel::load($file, function($reader) {
+  //       $results = $reader->get();
+  //       foreach($results as $key => $value) {
+  //         if ($value->church_id) {
+  //           $check = Masterlist::where('churchId', '=', strval($value->church_id))->first();
+  //           if (!$check) {
+  //             $member = new Masterlist;
+  //             $member->churchId      = strval($value->church_id);
+  //             $member->firstname     = $value->first_name;
+  //             $member->middlename    = $value->middle_name;
+  //             $member->lastname      = $value->last_name;
+  //             $member->email         = '';
+  //             $member->lokalOrigin   = $value->lokal;
+  //             $member->birthday      = '';
+  //             $member->sabbathDay    = $value->sabbath_day;
+  //             $member->contactNumber = $value->contact_number;
+  //             $member->address       = '';
+  //             $member->status        = 'ACTIVE';
+  //             $member->isOfficer     = 0;
+  //             $member->memberType    = 'MEMBER';
+  //             $member->save();
+  //           }
+  //         }
+  //       }
+  //   });
+  // }
 }
